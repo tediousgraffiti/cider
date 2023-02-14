@@ -8,43 +8,32 @@ MAX_IPV4 = 2**32 - 1
 
 
 def cidr_to_subnet(address: str, prefix: int):
+    # convert cidr prefix to network mask:
     subnet_mask_dec = MAX_IPV4 ^ (MAX_IPV4 >> prefix)
     subnet_mask_bin = bin(subnet_mask_dec)[2:]
-    subnet_mask_str = ".".join(
-        map(
-            lambda x: str(int(x, base=2)),
-            (subnet_mask_bin[i * 8 : (i + 1) * 8] for i in range(4)),
-        )
-    )
+    subnet_mask_octets = [
+        int(subnet_mask_bin[i * 8 : (i + 1) * 8], base=2) for i in range(4)
+    ]
+    subnet_mask_str = ".".join(map(str, subnet_mask_octets))
+    address_count = 2 ** (32 - prefix)
 
-    host_count = 2 ** (32 - prefix)
+    # find network id
+    network_id_octets = []
+    address_octets = [int(addr) for addr in address.split(".")]
+    for address_octet, mask_octet in zip(address_octets, subnet_mask_octets):
+        network_id_octets.append(address_octet & mask_octet)
 
-    # address_dec = address.split(".")
-    # network_id = address ^ subnet_mask_bin
+    # find broadcast ip:
+    #    network_id | ~subnetmask
 
-    # complement = 32 - prefix
-    # mask_len = complement % 8
-    # mask = 256 - mask_len
-    # octet = cidr // 8 + 1
-    # group_size = 2**complement
-
-    # if octet == 1:
-    #     subnet_mask = f"{mask}.0.0.0"
-    # elif octet == 2:
-    #     subnet_mask = f"255.{mask}.0.0"
-    # elif octet == 3:
-    #     subnet_mask = f"255.255.{mask}.0"
-    # else:
-    #     subnet_mask = f"255.255.255.{mask}"
-    group_size = 42
     return {
         "subnet_mask": subnet_mask_str,
-        "network_id": "blah",
+        "network_id": ".".join(map(str, network_id_octets)),
         "next_network": "blah",
         "broadcast_ip": "blah",
         "first_host": "blah",
         "last_host": "blah",
-        "addressable_hosts": host_count - 2,
+        "addressable_hosts": address_count - 2,
     }
 
 
