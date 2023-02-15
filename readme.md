@@ -15,3 +15,5 @@ Update: lol of course this is [built into the standard library](https://docs.pyt
 * [Practical Networking - Subnetting Mastery](https://www.youtube.com/watch?v=BWZ-MHIhqjM&list=PLIFyRwBY_4bQUE4IB5c4VPRyDoLgOdExE&index=2&ab_channel=PracticalNetworking)
 * [identify network and broadcast address of a subnet](https://www.countryipblocks.net/blog/identifying-the-network-and-broadcast-address-of-a-subnet/)
 * [ipaddress.py source](https://github.com/python/cpython/blob/4aeae286715a3a9fa624429733582917606000c3/Lib/ipaddress.py)
+* [Calculating Subnets w/Python3 (Video)](https://www.youtube.com/watch?v=_b0qNXBWnlI&ab_channel=NateSinger)
+* [StackOverflow: Bitwsie operation unary invert in python](https://stackoverflow.com/questions/7278779/bit-wise-operation-unary-invert)
